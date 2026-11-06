@@ -63,12 +63,18 @@ export default function App() {
     setInput(String(inputs) + ".");
   }
 
- function handleSignChange() {
-  setInput(Number(inputs) * -1);
-}
+  function handleSignChange() {
+    setInput(Number(inputs) * -1);
+  }
   // For resetting
+  // function resetting() {
+  //   setInput(0);
+  // }
+
   function resetting() {
     setInput(0);
+    setFirstOperand(null);
+    setOperator(null);
   }
 
   return (
