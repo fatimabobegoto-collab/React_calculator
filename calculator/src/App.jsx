@@ -1,66 +1,136 @@
 import "./index.css";
 import { useState } from "react";
 export default function App() {
-  const [inputs, setInput] = useState()
-  // for adding
-  function increment(){
-    
+  const [inputs, setInput] = useState(0);
+  const [firstOperand, setFirstOperand] = useState(null);
+  const [operator, setOperator] = useState(null);
+  //handling numbers
+  function handleDigit(e) {
+    const digit = e.target.textContent;
+
+    setInput((prev) => {
+      return prev === 0 ? digit : String(prev) + digit;
+    });
   }
 
-  // for substraction
-  function substraction(){
-
-  }
-
-  //for division
-  function division(){
-
-  }
-
-  // for multiplication
-  function multiplication(){
-
+  // mathematical operators
+  function handleOperator(op) {
+    setFirstOperand(Number(inputs));
+    setOperator(op);
+    setInput(0);
   }
 
   //for equal
+  function equal() {
+    let result;
 
-  function equal(){
+    switch (operator) {
+      case "+":
+        result = result = firstOperand + Number(inputs);
+        break;
 
+      case "-":
+        result = result = firstOperand - Number(inputs);
+        break;
+
+      case "*":
+        result = result = firstOperand * Number(inputs);
+        break;
+
+      case "/":
+        result = result = firstOperand / Number(inputs);
+        break;
+
+      case "%":
+        result = result = firstOperand % Number(inputs);
+        break;
+
+      default:
+        return;
+    }
+
+    setInput(result);
   }
 
+  //decimal operations
+  // function handleDecimal(){
+  //  return  String(inputs).includes('.') ? String(inputs): String(inputs) + '.';
+  // }
+
+  function handleDecimal() {
+    if (String(inputs).includes(".")) return;
+
+    setInput(String(inputs) + ".");
+  }
+
+ function handleSignChange() {
+  setInput(Number(inputs) * -1);
+}
   // For resetting
-  function resetting(){
-
+  function resetting() {
+    setInput(0);
   }
-
-  // for modulos
-  function modulos(){
-
-  }
-
 
   return (
     <div className="calc">
-      <input type="text" className="result" />
-      <button className="btn" onClick={resetting}>AC</button>
-      <button className="btn">+/-</button>
-      <button className="btn" onClick={modulos}>%</button>
-      <button className="operator" onClick={division}>÷</button>
-      <button className="btn">7</button>
-      <button className="btn">8</button>
-      <button className="btn">9</button>
-      <button className="operator" onClick={multiplication}>X</button>
-      <button className="btn">4</button>
-      <button className="btn">5</button>
-      <button className="btn">6</button>
-      <button className="operator" onClick={substraction}>-</button>
-      <button className="btn">1</button>
-      <button className="btn">2</button>
-      <button className="btn">3</button>
-      <button className="operator" onClick={increment}>+</button>
-      <button className="zero">0</button>
-      <button className="btn">.</button>
-      <button className="operator" onClick={equal}>=</button>
+      <input type="text" className="result" readOnly value={inputs} />
+      <button className="btn" onClick={resetting}>
+        AC
+      </button>
+      <button className="btn" onClick={handleSignChange}>
+        +/-
+      </button>
+      <button className="btn" onClick={() => handleOperator("%")}>
+        %
+      </button>
+      <button className="operator" onClick={() => handleOperator("/")}>
+        ÷
+      </button>
+      <button className="btn" onClick={handleDigit}>
+        7
+      </button>
+      <button className="btn" onClick={handleDigit}>
+        8
+      </button>
+      <button className="btn" onClick={handleDigit}>
+        9
+      </button>
+      <button className="operator" onClick={() => handleOperator("*")}>
+        x
+      </button>
+      <button className="btn" onClick={handleDigit}>
+        4
+      </button>
+      <button className="btn" onClick={handleDigit}>
+        5
+      </button>
+      <button className="btn" onClick={handleDigit}>
+        6
+      </button>
+      <button className="operator" onClick={() => handleOperator("-")}>
+        -
+      </button>
+      <button className="btn" onClick={handleDigit}>
+        1
+      </button>
+      <button className="btn" onClick={handleDigit}>
+        2
+      </button>
+      <button className="btn" onClick={handleDigit}>
+        3
+      </button>
+      <button className="operator" onClick={() => handleOperator("+")}>
+        +
+      </button>
+      <button className="zero" onClick={handleDigit}>
+        0
+      </button>
+      <button className="btn" onClick={handleDecimal}>
+        .
+      </button>
+      <button className="operator" onClick={equal}>
+        =
+      </button>
     </div>
   );
 }
